@@ -25,6 +25,38 @@
     "resetmethod": "nodemcu",
     "speed": 115200
   },
+  "debug": {
+    "tools": {
+      "custom": {
+        "server": {
+          "package": "toolchain-xtensa",
+          "executable": "bin/xtensa-lx106-elf-gdb"
+        },
+        "init_cmds": [
+          "set remote hardware-breakpoint-limit 1",
+          "set remote hardware-watchpoint-limit 1",
+          "set remote interrupt-on-connect on",
+          "set remote kill-packet off",
+          "set remote symbol-lookup-packet off",
+          "set remote verbose-resume-packet off",
+          "file \"$PROG_PATH\"",
+          "mem 0x20000000 0x3fefffff ro cache",
+          "mem 0x3ff00000 0x3fffffff rw",
+          "mem 0x40000000 0x400fffff ro cache",
+          "mem 0x40100000 0x4013ffff rw cache",
+          "mem 0x40140000 0x5fffffff ro cache",
+          "mem 0x60000000 0x60001fff rw",
+          "set remotebaud 115200",
+          "target remote $DEBUG_PORT",
+          "$INIT_BREAK"
+        ],
+        "init_break": "",
+        "load_cmd": "manual",
+        "require_debug_port": true,
+        "default": true
+      }
+    }
+  },
   "url": "https://wiki.wemos.cc/products:d1:d1_mini",
   "vendor": "WEMOS"
 }
